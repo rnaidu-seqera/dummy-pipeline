@@ -6,7 +6,6 @@
  * at the intended location (/staging/scratch)
  */
 
-params.efs_file_system_id = "fs-12345678"  // EFS filesystem ID (if available)
 params.mount_path = "/staging/scratch"      // Intended mount location
 
 process testEFSMount {
@@ -18,8 +17,7 @@ process testEFSMount {
     echo "======================================================================"
     echo "EFS/FSx Mount Test"
     echo "======================================================================"
-    echo "Intended mount path: ${params.mount_path}"
-    echo "EFS ID: ${params.efs_file_system_id}"
+    echo "Testing mount path: ${params.mount_path}"
     echo ""
 
     echo "=== 1. Checking if ${params.mount_path} exists ==="
