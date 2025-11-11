@@ -1,40 +1,35 @@
 #!/usr/bin/env nextflow
 
-params.efs_file_system_id = "fs-12345678"  // Replace with actual EFS ID if testing real mount
+/*
+ * Simple Hello World Pipeline
+ * Tests basic Nextflow execution on Seqera Platform
+ */
 
-process testWriteToMount {
+params.greeting = "Hello World"
+
+process sayHello {
     debug true
-    
+
+    output:
+    path "hello.txt"
+
     script:
     """
-    echo "=== Checking mount points ==="
-    df -h
-    echo ""
-    
-    echo "=== Checking if /staging/scratch exists ==="
-    ls -la /staging/ || echo "/staging does not exist"
-    echo ""
-    
-    echo "=== Checking what's mounted at /staging/scratch ==="
-    df -h /staging/scratch 2>/dev/null || echo "Cannot determine filesystem for /staging/scratch"
-    mount | grep staging || echo "No /staging mount found in mount table"
-    echo ""
-    
-    echo "=== Attempting to write test file ==="
-    mkdir -p /staging/scratch
-    echo "Test file written at \$(date)" > /staging/scratch/test_file_\${HOSTNAME}_\${AWS_BATCH_JOB_ID}.txt
-    
-    echo "=== Verifying file was written ==="
-    ls -la /staging/scratch/
-    cat /staging/scratch/test_file_\${HOSTNAME}_\${AWS_BATCH_JOB_ID}.txt
-    
-    echo ""ß
-    echo "=== Checking filesystem type and mount info for the written file ==="
-    df -hT /staging/scratch/
-    stat -f /staging/scratch/ || stat --file-system /staging/scratch/
+    echo "${params.greeting} from Nextflow!" | tee hello.txt
+    echo "Pipeline executed successfully at \$(date)"
+    echo "Running on: \${HOSTNAME}"
+    echo "Nextflow version: ${workflow.nextflow.version}"
     """
 }
 
 workflow {
-    testWriteToMount()
+    sayHello()
+
+    sayHello.out.view { "Created output file: $it" }
+}
+
+workflow.onComplete {
+    println "Pipeline completed!"
+    println "Status: ${workflow.success ? 'SUCCESS' : 'FAILED'}"
+    println "Duration: ${workflow.duration}"
 }
