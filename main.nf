@@ -2,8 +2,7 @@
 
 /*
  * EFS/FSx Mount Testing Pipeline
- * Replicates customer issue where EFS/FSx volumes are not being mounted
- * at the intended location (/staging/scratch)
+ * Tests whether EFS/FSx volumes are properly mounted at /staging/scratch
  */
 
 params.efs_file_system_id = "fs-030e6f671ce998fa2"  // EFS filesystem ID
@@ -95,9 +94,8 @@ process testEFSMount {
     else
         echo "Result: ✗ EFS/FSx is NOT mounted - using EBS volume"
         echo ""
-        echo "This replicates the customer's issue:"
-        echo "- Seqera Platform config shows volumes = '/staging'"
-        echo "- But this only creates a directory, doesn't mount EFS/FSx"
+        echo "Issue observed:"
+        echo "- Directory exists but EFS/FSx is not mounted"
         echo "- Data goes to root EBS volume instead of shared storage"
     fi
     echo "======================================================================"
