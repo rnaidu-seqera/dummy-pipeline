@@ -9,6 +9,7 @@ params.greeting = "Hello World"
 
 process sayHello {
     debug true
+    container 'ubuntu:22.04'
 
     output:
     path "hello.txt"
