@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 params.input = "test-input"
-params.outdir = "test-output"
+outputDir = params.outdir
 params.pipeline_info = "test-pipeline-info"
 
 process TEST {
@@ -12,7 +12,7 @@ process TEST {
 
     script:
     """
-    echo "${params.outdir}"
+    echo "${outputDir}"
     """
 }
 
