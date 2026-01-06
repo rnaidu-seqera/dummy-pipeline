@@ -18,4 +18,5 @@ process TEST {
 
 workflow {
     TEST()
+    TEST.out.view()
 }
