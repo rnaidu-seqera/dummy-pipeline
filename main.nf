@@ -26,7 +26,7 @@ workflow {
 }
 
 output {
-    directory OutputDir
+    directory "$OutputDir"
     
     bams {
         path 'bams'
