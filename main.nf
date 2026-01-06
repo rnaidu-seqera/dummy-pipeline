@@ -12,7 +12,7 @@ process TEST {
 
     script:
     """
-    echo "Test complete"
+    echo "${params.outdir}"
     """
 }
 
