@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 params.input = "test-input"
-OutputDir = params.outdir
+//OutputDir = params.outdir
 params.pipeline_info = "test-pipeline-info"
 
 process TEST {
@@ -26,7 +26,6 @@ workflow {
 }
 
 output {
-    directory "$OutputDir"
     
     bams {
         path 'bams'
